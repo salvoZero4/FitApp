@@ -4,8 +4,7 @@ import Mealcard from "../components/Mealcard";
 import { MealContext } from "../context/MealContext";
 
 export default function Nutrition() {
-  const { meals, supplements, setSupplements, calorieGoal } =
-    useContext(MealContext)!;
+  const { meals, supplements, setSupplements } = useContext(MealContext)!;
   let totalCalories = 0;
   let totalProtein = 0;
   let totalCarbs = 0;
@@ -20,7 +19,6 @@ export default function Nutrition() {
       totalFats += food.macros.fats;
     });
   });
-  const caloriesLeft: number = calorieGoal ? calorieGoal - totalCalories : 0;
   const toggleSupplement = (index: number) => {
     const updatedSupplements = supplements.map((supplement, i) => {
       if (i === index) {
@@ -37,12 +35,7 @@ export default function Nutrition() {
       <h1 className="text-[var(--text-primary)] text-4xl font-bold tracking-tight md:text-5xl mb-5">
         Daily nutrition overview
       </h1>
-      <Calorietab
-        calories={caloriesLeft}
-        protein={totalProtein}
-        carbs={totalCarbs}
-        fats={totalFats}
-      />
+      <Calorietab />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
         {meals.map((meal, index) => (
           <div key={index} className="card-surface w-full flex flex-col h-full">

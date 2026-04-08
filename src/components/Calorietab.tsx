@@ -1,12 +1,5 @@
 import { useContext } from "react";
 import { MealContext } from "../context/MealContext";
-type CalorietabProps = {
-  calories: number;
-  protein: number;
-  carbs: number;
-  fats: number;
-};
-
 export default function Calorietab() {
   const { meals, calorieGoal } = useContext(MealContext)!;
   let totalCalories = 0;
