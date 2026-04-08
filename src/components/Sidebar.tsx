@@ -1,50 +1,93 @@
 import { Link, NavLink } from "react-router-dom";
 
-export default function Sidebar() {
+type SidebarProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const getNavLinkClass = ({ isActive }: { isActive: boolean }) => {
     return isActive
-      ? "text-[#2B77D2] font-bold border-r border-[#2B77D2] pr-5"
-      : "text-gray-400 hover:text-[#2B77D2] transition-colors duration-500";
+      ? "focus-ring w-full rounded-lg border border-[var(--accent)] bg-[var(--accent-soft)] px-3 py-2 text-left text-sm font-semibold tracking-wide text-white"
+      : "focus-ring w-full rounded-lg border border-transparent px-3 py-2 text-left text-sm font-medium tracking-wide text-[var(--text-secondary)] transition-colors duration-200 hover:text-white";
   };
 
   return (
-    <aside className="bg-[#0A0A0B] text-gray-400 p-4 w-64 border-r border-gray-400 min-h-screen">
-      <div>
-        <Link to="/dashboard">
-          <h1 className="text-2xl font-bold text-[#007AFF]">
-            F.<span className="text-gray-400">I</span>.T.
-          </h1>
-          <h2 className="text-sm">
-            <span className="text-[#007AFF]">FITNESS</span> INFORMATION{" "}
-            <span className="text-[#007AFF]">TRACKER</span>
-          </h2>
-        </Link>
-      </div>
+    <>
+      {isOpen && (
+        <button
+          aria-label="Close menu overlay"
+          className="fixed inset-0 z-30 bg-black/60 md:hidden"
+          onClick={onClose}
+          type="button"
+        />
+      )}
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 w-72 border-r bg-[var(--app-bg)] p-4 transition-transform duration-300 md:static md:z-10 md:w-64 md:translate-x-0 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+        style={{ borderColor: "var(--border)" }}
+      >
+        <div className="mb-8 flex items-start justify-between">
+          <Link to="/dashboard">
+            <h1 className="text-2xl font-black tracking-tight text-[var(--accent)]">
+              F.<span className="text-white">I</span>.T.
+            </h1>
+            <h2 className="text-xs tracking-[0.18em] text-[var(--text-secondary)]">
+              FITNESS INFORMATION TRACKER
+            </h2>
+          </Link>
+          <button
+            aria-label="Close menu"
+            className="btn-secondary focus-ring h-9 px-3 md:hidden"
+            onClick={onClose}
+            type="button"
+          >
+            Close
+          </button>
+        </div>
 
-      <nav>
-        <ul className="space-y-10 text-center mt-8 pt-4">
-          <li>
-            <NavLink className={getNavLinkClass} to="/dashboard">
-              DASHBOARD
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={getNavLinkClass} to="/workouts">
-              WORKOUTS
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={getNavLinkClass} to="/nutrition">
-              NUTRITION
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={getNavLinkClass} to="/progress">
-              PROGRESS
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-    </aside>
+        <nav aria-label="Main navigation">
+          <ul className="space-y-3">
+            <li>
+              <NavLink
+                className={getNavLinkClass}
+                onClick={onClose}
+                to="/dashboard"
+              >
+                Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={getNavLinkClass}
+                onClick={onClose}
+                to="/workouts"
+              >
+                Workouts
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={getNavLinkClass}
+                onClick={onClose}
+                to="/nutrition"
+              >
+                Nutrition
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={getNavLinkClass}
+                onClick={onClose}
+                to="/progress"
+              >
+                Progress
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </>
   );
 }

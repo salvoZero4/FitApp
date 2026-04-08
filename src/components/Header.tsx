@@ -1,7 +1,53 @@
-export default function Header() {
+import { useLocation } from "react-router-dom";
+
+type HeaderProps = {
+  onMenuToggle: () => void;
+};
+
+export default function Header({ onMenuToggle }: HeaderProps) {
+  const location = useLocation();
+
+  const pageMap: Record<string, string> = {
+    "/dashboard": "Dashboard",
+    "/workouts": "Workouts",
+    "/nutrition": "Nutrition",
+    "/progress": "Progress",
+    "/register": "Register",
+    "/login": "Login",
+  };
+
+  const pageTitle = pageMap[location.pathname] ?? "Fitness Tracker";
+  const today = new Date().toLocaleDateString(undefined, {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+  });
+
   return (
-    <header className="bg-[#0A0A0B] border-b border-gray-700 p-4 flex items-center justify-between">
-      <button className="ml-auto bg-[#00E5FF] text-[#0A0A0B] p-2 rounded">
+    <header
+      className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b px-4 py-4 backdrop-blur md:px-8"
+      style={{
+        borderColor: "var(--border)",
+        backgroundColor: "rgba(11, 12, 16, 0.88)",
+      }}
+    >
+      <div className="flex items-center gap-3">
+        <button
+          aria-label="Open menu"
+          className="btn-secondary focus-ring h-10 px-3 md:hidden"
+          onClick={onMenuToggle}
+          type="button"
+        >
+          Menu
+        </button>
+        <div>
+          <p className="text-sm text-[var(--text-secondary)]">{today}</p>
+          <h1 className="text-lg font-semibold tracking-tight text-white md:text-xl">
+            {pageTitle}
+          </h1>
+        </div>
+      </div>
+      <button className="btn-primary focus-ring" type="button">
         Logout
       </button>
     </header>
