@@ -16,7 +16,7 @@ export default function Dashboard() {
       <h1 className="page-title">{formattedDate}</h1>
 
       <div className="flex flex-col gap-4 lg:flex-row">
-        <Calorietab calories={2000} protein={150} carbs={250} fats={70} />
+        <Calorietab />
         <Weighttab />
       </div>
 
