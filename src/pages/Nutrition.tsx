@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import Mealcard from "../components/Mealcard";
 import { MealContext } from "../context/MealContext";
 import SupplementCard from "../components/SupplementCard";
+import GoalSetting from "../components/GoalSetting";
 
 export default function Nutrition() {
   const { meals, supplements, setSupplements } = useContext(MealContext)!;
@@ -13,6 +14,7 @@ export default function Nutrition() {
 
   const [activeMealName, setActiveMealName] = useState<string | null>(null);
   const [activeSupplement, setActiveSupplement] = useState<boolean>(false);
+  const [isGoalSettingsOpen, setIsGoalSettingsOpen] = useState(false);
   meals.forEach((meal) => {
     meal.foods.forEach((food) => {
       totalCalories += food.calories;
@@ -34,9 +36,18 @@ export default function Nutrition() {
 
   return (
     <section className="space-y-4">
-      <h1 className="text-[var(--text-primary)] text-4xl font-bold tracking-tight md:text-5xl mb-5">
-        Daily nutrition overview
-      </h1>
+      <div className="flex flex-row items-center justify-between">
+        <h1 className="text-[var(--text-primary)] text-4xl font-bold tracking-tight md:text-5xl ">
+          Daily nutrition overview
+        </h1>
+        <button
+          className="btn-primary  text-sm p-4"
+          onClick={() => setIsGoalSettingsOpen(true)}
+        >
+          Edit Goals
+        </button>
+      </div>
+
       <Calorietab />
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
         {meals.map((meal, index) => (
@@ -123,6 +134,7 @@ export default function Nutrition() {
       {activeSupplement && (
         <SupplementCard setActiveSupplement={setActiveSupplement} />
       )}
+      {isGoalSettingsOpen && <GoalSetting setIsOpen={setIsGoalSettingsOpen} />}
     </section>
   );
 }
