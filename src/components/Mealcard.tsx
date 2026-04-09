@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { MealContext } from "../context/MealContext";
 import type { Food, Meal } from "../context/MealContext";
 import { useContext } from "react";
@@ -10,9 +10,21 @@ export default function Mealcard({
   activeMealName: string | null;
   setActiveMealName: (mealName: string | null) => void;
 }) {
+  const [error, setError] = useState("");
   const { meals, setMeals } = useContext(MealContext)!;
-  const handleSetFood = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSetFood = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (
+      foodName.trim() === "" ||
+      foodWeight.trim() === "" ||
+      foodCalories.trim() === "" ||
+      foodCarbs.trim() === "" ||
+      foodProtein.trim() === "" ||
+      foodFats.trim() === ""
+    ) {
+      setError("Please fill all fields");
+      return;
+    }
     //logica per aggiungere il cibo al pasto attivo
     const newFood: Food = {
       name: foodName,
@@ -115,6 +127,9 @@ export default function Mealcard({
                 className="w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white  focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+            {error && (
+              <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+            )}
           </div>
           <div className="flex gap-2">
             <button

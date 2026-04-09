@@ -2,6 +2,7 @@ import Calorietab from "../components/Calorietab";
 import { useState, useContext } from "react";
 import Mealcard from "../components/Mealcard";
 import { MealContext } from "../context/MealContext";
+import SupplementCard from "../components/SupplementCard";
 
 export default function Nutrition() {
   const { meals, supplements, setSupplements } = useContext(MealContext)!;
@@ -11,6 +12,7 @@ export default function Nutrition() {
   let totalFats = 0;
 
   const [activeMealName, setActiveMealName] = useState<string | null>(null);
+  const [activeSupplement, setActiveSupplement] = useState<boolean>(false);
   meals.forEach((meal) => {
     meal.foods.forEach((food) => {
       totalCalories += food.calories;
@@ -79,21 +81,37 @@ export default function Nutrition() {
       <div className="card-surface w-full">
         <h2 className="text-2xl font-semibold text-white mb-2">Supplements</h2>
         {supplements.length > 0 ? (
-          <ul className="space-y-2">
-            {supplements.map((supplement, index) => (
-              <li key={index} className="text-white">
-                {supplement.name} - {supplement.dosage}{" "}
-                <button
-                  className="ml-2 px-2 py-1 text-xs rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors"
-                  onClick={() => toggleSupplement(index)}
-                >
-                  {supplement.isChecked ? "Taken" : "Take"}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <ul className="space-y-2">
+              {supplements.map((supplement, index) => (
+                <li key={index} className="text-white">
+                  {supplement.name} - {supplement.dosage}{" "}
+                  <button
+                    className="ml-2 px-2 py-1 text-xs rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors"
+                    onClick={() => toggleSupplement(index)}
+                  >
+                    {supplement.isChecked ? "Taken" : "Take"}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button
+              className="btn-primary mt-4 w-full text-sm"
+              onClick={() => setActiveSupplement(true)}
+            >
+              + Add Supplement
+            </button>
+          </div>
         ) : (
-          <p className="text-white">No supplements added yet.</p>
+          <div>
+            <p className="text-white">No supplements added yet.</p>
+            <button
+              className="btn-primary mt-4 w-full text-sm"
+              onClick={() => setActiveSupplement(true)}
+            >
+              + Add Supplement
+            </button>
+          </div>
         )}
       </div>
       {activeMealName && (
@@ -101,6 +119,9 @@ export default function Nutrition() {
           activeMealName={activeMealName}
           setActiveMealName={setActiveMealName}
         />
+      )}
+      {activeSupplement && (
+        <SupplementCard setActiveSupplement={setActiveSupplement} />
       )}
     </section>
   );

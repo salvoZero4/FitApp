@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { MealContext } from "../context/MealContext";
 export default function Calorietab() {
-  const { meals, calorieGoal } = useContext(MealContext)!;
+  const { meals, calorieGoal, proteinGoal, carbsGoal, fatsGoal } =
+    useContext(MealContext)!;
   let totalCalories = 0;
   let totalProtein = 0;
   let totalCarbs = 0;
@@ -16,6 +17,9 @@ export default function Calorietab() {
     });
   });
   let caloriesLeft = calorieGoal ? calorieGoal - totalCalories : 0;
+  let proteinLeft = proteinGoal ? proteinGoal - totalProtein : 0;
+  let carbsLeft = carbsGoal ? carbsGoal - totalCarbs : 0;
+  let fatsLeft = fatsGoal ? fatsGoal - totalFats : 0;
   return (
     <div className="card-surface w-full lg:flex-1">
       <div className="flex flex-col gap-6 md:flex-row md:items-center">
@@ -39,7 +43,7 @@ export default function Calorietab() {
               Protein
             </p>
             <p className="mt-1 text-xl font-semibold text-white">
-              {totalProtein} g
+              {proteinLeft} g
             </p>
           </div>
           <div
@@ -50,7 +54,7 @@ export default function Calorietab() {
               Carbs
             </p>
             <p className="mt-1 text-xl font-semibold text-white">
-              {totalCarbs} g
+              {carbsLeft} g
             </p>
           </div>
           <div
@@ -61,7 +65,7 @@ export default function Calorietab() {
               Fats
             </p>
             <p className="mt-1 text-xl font-semibold text-white">
-              {totalFats} g
+              {fatsLeft} g
             </p>
           </div>
         </div>
