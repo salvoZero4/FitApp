@@ -37,7 +37,10 @@ export default function Calorietab() {
         <div className="grid w-full grid-cols-3 gap-3 md:ml-auto md:max-w-sm">
           <div
             className="rounded-lg border p-3"
-            style={{ borderColor: "var(--border)" }}
+            style={{
+              borderColor: "rgba(0, 214, 255, 0.35)",
+              backgroundColor: "rgba(0, 214, 255, 0.08)",
+            }}
           >
             <p className="text-xs uppercase tracking-wide text-[var(--text-secondary)]">
               Protein
@@ -48,7 +51,10 @@ export default function Calorietab() {
           </div>
           <div
             className="rounded-lg border p-3"
-            style={{ borderColor: "var(--border)" }}
+            style={{
+              borderColor: "rgba(0, 214, 255, 0.35)",
+              backgroundColor: "rgba(0, 214, 255, 0.08)",
+            }}
           >
             <p className="text-xs uppercase tracking-wide text-[var(--text-secondary)]">
               Carbs
@@ -59,7 +65,10 @@ export default function Calorietab() {
           </div>
           <div
             className="rounded-lg border p-3"
-            style={{ borderColor: "var(--border)" }}
+            style={{
+              borderColor: "rgba(0, 214, 255, 0.35)",
+              backgroundColor: "rgba(0, 214, 255, 0.08)",
+            }}
           >
             <p className="text-xs uppercase tracking-wide text-[var(--text-secondary)]">
               Fats

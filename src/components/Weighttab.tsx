@@ -12,12 +12,12 @@ export default function Weighttab() {
         <span className="text-base text-[var(--text-secondary)]">kg</span>
       </p>
       {deviationWeight < 0 && (
-        <p className="mt-2 rounded-md border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm font-semibold text-green-400">
+        <p className="mt-2 rounded-md border border-emerald-400/40 bg-emerald-400/12 px-3 py-2 text-sm font-semibold text-emerald-300">
           Down by {Math.abs(deviationWeight)} kg from average
         </p>
       )}
       {deviationWeight > 0 && (
-        <p className="mt-2 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-400">
+        <p className="mt-2 rounded-md border border-rose-400/40 bg-rose-400/12 px-3 py-2 text-sm font-semibold text-rose-300">
           Up by {Math.abs(deviationWeight)} kg from average
         </p>
       )}

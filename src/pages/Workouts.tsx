@@ -33,6 +33,8 @@ export default function Workouts() {
 
   return (
     <section className="space-y-5">
+      <h1 className="page-title">Workouts</h1>
+
       <div className="card-surface">
         <h2 className="section-title">Select days</h2>
         <p className="mt-1 text-sm text-[var(--text-secondary)]">
@@ -45,8 +47,8 @@ export default function Workouts() {
               key={day}
               className={`focus-ring min-h-11 rounded-lg border px-3 py-2 text-sm font-semibold transition-colors ${
                 ActiveDays.includes(day)
-                  ? "bg-[var(--accent)] text-white"
-                  : "bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:text-white"
+                  ? "bg-[var(--accent)] text-[#041426]"
+                  : "bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:bg-[#243454] hover:text-white"
               }`}
               onClick={() => toggleDay(day)}
               style={{
@@ -69,8 +71,8 @@ export default function Workouts() {
               key={day}
               className="rounded-lg border p-5 text-white"
               style={{
-                borderColor: "rgba(79, 143, 232, 0.4)",
-                backgroundColor: "rgba(79, 143, 232, 0.16)",
+                borderColor: "rgba(0, 214, 255, 0.45)",
+                backgroundColor: "rgba(0, 214, 255, 0.12)",
               }}
             >
               <div className="flex flex-row items-center justify-between mb-4 mt-0">
@@ -104,7 +106,7 @@ export default function Workouts() {
                 if (workout.day === day) {
                   return workout.exercises.map((exercise, index) => (
                     <ul key={index} className="mt-3 space-y-2">
-                      <li className="rounded-md border border-gray-700 bg-transparent px-3 py-2 text-sm">
+                      <li className="rounded-md border border-[var(--border)] bg-[var(--surface)]/65 px-3 py-2 text-sm">
                         <p className="font-medium">
                           {exercise.name} {exercise.sets} sets {exercise.reps}{" "}
                           reps {exercise.weight} kg

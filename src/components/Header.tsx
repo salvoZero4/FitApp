@@ -28,7 +28,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
       className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b px-4 py-4 backdrop-blur md:px-8"
       style={{
         borderColor: "var(--border)",
-        backgroundColor: "rgba(11, 12, 16, 0.88)",
+        backgroundColor: "rgba(8, 13, 24, 0.9)",
       }}
     >
       <div className="flex items-center gap-3">
@@ -47,7 +47,10 @@ export default function Header({ onMenuToggle }: HeaderProps) {
           </h1>
         </div>
       </div>
-      <button className="btn-primary focus-ring" type="button">
+      <button
+        className="btn-primary focus-ring shadow-[0_6px_20px_rgba(0,214,255,0.28)]"
+        type="button"
+      >
         Logout
       </button>
     </header>

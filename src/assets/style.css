@@ -1,22 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --app-bg: #0b0c10;
-  --surface: #181a1f;
-  --surface-muted: #23262d;
-  --border: #343842;
-  --text-primary: #f3f5f7;
-  --text-secondary: #a5adb8;
-  --accent: #4f8fe8;
-  --accent-strong: #3e77c7;
-  --accent-soft: #1f2f46;
+  --app-bg: #080d18;
+  --surface: #121a2b;
+  --surface-muted: #1b2740;
+  --border: #2f4673;
+  --text-primary: #f6fbff;
+  --text-secondary: #b2c4e7;
+  --accent: #00d6ff;
+  --accent-strong: #00b6da;
+  --accent-soft: #153a57;
 }
 
 body {
   background: radial-gradient(
     circle at top right,
-    #121a2a 0%,
-    var(--app-bg) 45%
+    #102949 0%,
+    #0b1730 35%,
+    var(--app-bg) 65%
   );
   color: var(--text-primary);
 }
@@ -43,6 +44,7 @@ body {
     border-radius: 0.75rem;
     border-style: solid;
     border-width: 1px;
+    box-shadow: 0 10px 26px rgba(3, 10, 24, 0.35);
     padding: 1rem;
   }
 
@@ -50,17 +52,20 @@ body {
     align-items: center;
     background-color: var(--accent);
     border-radius: 0.5rem;
-    color: #ffffff;
+    color: #041426;
     display: inline-flex;
     font-size: 0.875rem;
     font-weight: 600;
     justify-content: center;
     padding: 0.625rem 1rem;
-    transition: background-color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .btn-primary:hover {
     background-color: var(--accent-strong);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
@@ -84,6 +89,7 @@ body {
   .btn-secondary:hover {
     border-color: var(--accent);
     color: white;
+    background-color: #223251;
   }
 
   .focus-ring {

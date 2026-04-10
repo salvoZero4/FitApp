@@ -8,8 +8,8 @@ type SidebarProps = {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const getNavLinkClass = ({ isActive }: { isActive: boolean }) => {
     return isActive
-      ? "focus-ring w-full rounded-lg border border-[var(--accent)] bg-[var(--accent-soft)] px-3 py-2 text-left text-sm font-semibold tracking-wide text-white"
-      : "focus-ring w-full rounded-lg border border-transparent px-3 py-2 text-left text-sm font-medium tracking-wide text-[var(--text-secondary)] transition-colors duration-200 hover:text-white";
+      ? "focus-ring w-full rounded-lg border border-[var(--accent)] bg-[var(--accent-soft)] px-3 py-2 text-left text-sm font-semibold tracking-wide text-white shadow-[0_0_0_1px_rgba(0,214,255,0.25)]"
+      : "focus-ring w-full rounded-lg border border-transparent px-3 py-2 text-left text-sm font-medium tracking-wide text-[var(--text-secondary)] transition-colors duration-200 hover:bg-[var(--surface-muted)] hover:text-white";
   };
 
   return (
@@ -17,7 +17,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {isOpen && (
         <button
           aria-label="Close menu overlay"
-          className="fixed inset-0 z-30 bg-black/60 md:hidden"
+          className="fixed inset-0 z-30 bg-[#02050e]/70 md:hidden"
           onClick={onClose}
           type="button"
         />

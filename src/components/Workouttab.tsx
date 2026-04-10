@@ -21,8 +21,8 @@ export default function Workouttab() {
             key={exercise.name}
             className="rounded-lg border p-4 text-sm text-white"
             style={{
-              borderColor: "rgba(79, 143, 232, 0.4)",
-              backgroundColor: "rgba(79, 143, 232, 0.14)",
+              borderColor: "rgba(0, 214, 255, 0.5)",
+              backgroundColor: "rgba(0, 214, 255, 0.12)",
             }}
           >
             <p className="font-semibold">{exercise.name}</p>
