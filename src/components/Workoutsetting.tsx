@@ -1,46 +1,49 @@
-import { useState, useContext, type FormEvent } from "react";
-import { MealContext } from "../context/MealContext";
+import { useContext, useState } from "react";
+import { WorkoutContext } from "../context/WorkoutContext";
 
-type GoalSettingsProps = {
-  setIsOpen: (isOpen: boolean) => void;
+type WorkoutSettingProps = {
+  selectedDay: string | null;
+  setSelectedDay: (day: string | null) => void;
 };
 
-export default function GoalSettings({ setIsOpen }: GoalSettingsProps) {
-  const { setCalorieGoal, setProteinGoal, setCarbsGoal, setFatsGoal } =
-    useContext(MealContext)!;
+export default function WorkoutSetting({
+  selectedDay,
+  setSelectedDay,
+}: WorkoutSettingProps) {
+  const { workouts, setWorkouts } = useContext(WorkoutContext);
 
-  const [tempCalories, setTempCalories] = useState("");
-  const [tempProtein, setTempProtein] = useState("");
-  const [tempCarbs, setTempCarbs] = useState("");
-  const [tempFats, setTempFats] = useState("");
+  const [exerciseName, setExerciseName] = useState("");
+  const [sets, setSets] = useState(0);
+  const [reps, setReps] = useState(0);
+  const [weight, setWeight] = useState(0);
   const [error, setError] = useState("");
 
-  const handleSave = (e: FormEvent<HTMLFormElement>) => {
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (tempCalories.trim() === "" || isNaN(Number(tempCalories))) {
-      setError("Please enter a valid calorie goal.");
+    if (exerciseName.trim() === "") {
+      setError("Please enter an exercise name.");
       return;
     }
     setError("");
-    if (
-      tempCarbs.trim() === "" ||
-      tempFats.trim() === "" ||
-      tempProtein.trim() === "" ||
-      isNaN(Number(tempCarbs)) ||
-      isNaN(Number(tempFats)) ||
-      isNaN(Number(tempProtein))
-    ) {
-      setError("Please enter valid macro goals.");
-      return;
-    }
 
-    setCalorieGoal(Number(tempCalories));
-    setProteinGoal(Number(tempProtein));
-    setCarbsGoal(Number(tempCarbs));
-    setFatsGoal(Number(tempFats));
-    setError("");
-
-    setIsOpen(false);
+    const newExercise = {
+      name: exerciseName,
+      sets: sets,
+      reps: reps,
+      weight: weight,
+    };
+    const updatedWorkouts = workouts.map((workout) => {
+      if (workout.day === selectedDay) {
+        return { ...workout, exercises: [...workout.exercises, newExercise] };
+      }
+      return workout;
+    });
+    setWorkouts(updatedWorkouts);
+    setSelectedDay(null);
+    setExerciseName("");
+    setSets(0);
+    setReps(0);
+    setWeight(0);
   };
 
   return (
@@ -51,12 +54,12 @@ export default function GoalSettings({ setIsOpen }: GoalSettingsProps) {
         <form className="space-y-4" onSubmit={handleSave}>
           <div>
             <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-              Daily Calories
+              Add Exercise
             </label>
             <input
-              type="number"
-              value={tempCalories}
-              onChange={(e) => setTempCalories(e.target.value)}
+              type="text"
+              value={exerciseName}
+              onChange={(e) => setExerciseName(e.target.value)}
               className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
             />
           </div>
@@ -64,34 +67,34 @@ export default function GoalSettings({ setIsOpen }: GoalSettingsProps) {
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                Protein
+                sets
               </label>
               <input
                 type="number"
-                value={tempProtein}
-                onChange={(e) => setTempProtein(e.target.value)}
+                value={sets}
+                onChange={(e) => setSets(Number(e.target.value))}
                 className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
             <div>
               <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                Carbs
+                Reps
               </label>
               <input
                 type="number"
-                value={tempCarbs}
-                onChange={(e) => setTempCarbs(e.target.value)}
+                value={reps}
+                onChange={(e) => setReps(Number(e.target.value))}
                 className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
             <div>
               <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                Fats
+                Weight
               </label>
               <input
                 type="number"
-                value={tempFats}
-                onChange={(e) => setTempFats(e.target.value)}
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
                 className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
@@ -102,12 +105,12 @@ export default function GoalSettings({ setIsOpen }: GoalSettingsProps) {
             <button
               type="button"
               className="btn-secondary w-full"
-              onClick={() => setIsOpen(false)}
+              onClick={() => setSelectedDay(null)}
             >
               Cancel
             </button>
             <button type="submit" className="btn-primary w-full">
-              Save Goals
+              Save Exercise
             </button>
           </div>
         </form>

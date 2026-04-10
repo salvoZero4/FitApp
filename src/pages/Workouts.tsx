@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { WorkoutContext } from "../context/WorkoutContext";
+import WorkoutSetting from "../components/Workoutsetting";
+import SessionEdit from "../components/SessionEdit";
 
 export default function Workouts() {
+  const { workouts, setWorkouts } = useContext(WorkoutContext);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [editSessionName, setEditSessionName] = useState("");
+
   const days = [
     "Monday",
     "Tuesday",
@@ -10,18 +17,18 @@ export default function Workouts() {
     "Saturday",
     "Sunday",
   ];
-  const [selectedDays, setSelectedDays] = useState<string[]>([
-    "Monday",
-    "Wednesday",
-    "Friday",
-  ]);
-
+  const ActiveDays = workouts
+    .filter((workout) => workout.isActive)
+    .map((workout) => workout.day);
+  // Impostiamo lo stato per vedere quale giorno del workout è attivo, in modo da poterlo evidenziare nell'interfaccia utente.
   const toggleDay = (day: string) => {
-    setSelectedDays((current) =>
-      current.includes(day)
-        ? current.filter((selectedDay) => selectedDay !== day)
-        : [...current, day],
-    );
+    const updatedWorkouts = workouts.map((workout) => {
+      if (workout.day === day) {
+        return { ...workout, isActive: !workout.isActive };
+      }
+      return workout;
+    });
+    setWorkouts(updatedWorkouts);
   };
 
   return (
@@ -34,16 +41,16 @@ export default function Workouts() {
         <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
           {days.map((day) => (
             <button
-              aria-pressed={selectedDays.includes(day)}
+              aria-pressed={ActiveDays.includes(day)}
               key={day}
               className={`focus-ring min-h-11 rounded-lg border px-3 py-2 text-sm font-semibold transition-colors ${
-                selectedDays.includes(day)
+                ActiveDays.includes(day)
                   ? "bg-[var(--accent)] text-white"
                   : "bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:text-white"
               }`}
               onClick={() => toggleDay(day)}
               style={{
-                borderColor: selectedDays.includes(day)
+                borderColor: ActiveDays.includes(day)
                   ? "var(--accent)"
                   : "var(--border)",
               }}
@@ -56,8 +63,8 @@ export default function Workouts() {
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {selectedDays.length > 0 ? (
-          selectedDays.map((day) => (
+        {ActiveDays.length > 0 ? (
+          ActiveDays.map((day) => (
             <div
               key={day}
               className="rounded-lg border p-5 text-white"
@@ -66,10 +73,55 @@ export default function Workouts() {
                 backgroundColor: "rgba(79, 143, 232, 0.16)",
               }}
             >
-              <h2 className="text-lg font-semibold">{day}</h2>
-              <p className="mt-1 text-sm text-[var(--text-secondary)]">
-                Active training day.
-              </p>
+              <div className="flex flex-row items-center justify-between mb-4 mt-0">
+                <h2 className="text-lg font-semibold">{day}</h2>
+                <button
+                  className="btn-secondary text-xs"
+                  onClick={() => setEditSessionName(day)}
+                >
+                  Edit Session Name
+                </button>
+              </div>
+
+              <div>
+                {workouts.map((workout) => {
+                  if (workout.day === day && workout.session) {
+                    return (
+                      <div
+                        key={workout.day}
+                        className="mb-4 inline-block rounded-md border border-gray-700 bg-[var(--surface)] px-4 py-2 shadow-sm"
+                      >
+                        <p className="text-lg font-bold tracking-wide text-[var(--accent)] uppercase">
+                          {workout.session}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+              {workouts.map((workout) => {
+                if (workout.day === day) {
+                  return workout.exercises.map((exercise, index) => (
+                    <ul key={index} className="mt-3 space-y-2">
+                      <li className="rounded-md border border-gray-700 bg-transparent px-3 py-2 text-sm">
+                        <p className="font-medium">
+                          {exercise.name} {exercise.sets} sets {exercise.reps}{" "}
+                          reps {exercise.weight} kg
+                        </p>
+                      </li>
+                    </ul>
+                  ));
+                }
+                return null;
+              })}
+
+              <button
+                className="btn-primary mt-4 w-full text-sm"
+                onClick={() => setSelectedDay(day)}
+              >
+                + Add Exercise
+              </button>
             </div>
           ))
         ) : (
@@ -81,6 +133,18 @@ export default function Workouts() {
           </p>
         )}
       </div>
+      {selectedDay && (
+        <WorkoutSetting
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
+        />
+      )}
+      {editSessionName && (
+        <SessionEdit
+          sessionName={editSessionName}
+          setSessionName={setEditSessionName}
+        />
+      )}
     </section>
   );
 }
