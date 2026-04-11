@@ -1,4 +1,6 @@
 import Calorietab from "../components/Calorietab";
+import SupplementList from "../components/SupplementList";
+
 import Weighttab from "../components/Weighttab";
 import Workouttab from "../components/Workouttab";
 
@@ -15,12 +17,16 @@ export default function Dashboard() {
     <section className="space-y-4 md:space-y-6">
       <h1 className="page-title">{formattedDate}</h1>
 
-      <div className="flex flex-col gap-4 lg:flex-row">
+      <div className="flex flex-col gap-4 lg:flex-row items-stretch">
         <Calorietab />
         <Weighttab />
       </div>
-
-      <Workouttab />
+      <div className="flex flex-col gap-4 lg:flex-row items-stretch">
+        <Workouttab />
+        <div className="flex w-full lg:max-w-xs">
+          <SupplementList />
+        </div>
+      </div>
     </section>
   );
 }

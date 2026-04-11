@@ -2,18 +2,17 @@ import Calorietab from "../components/Calorietab";
 import { useState, useContext } from "react";
 import Mealcard from "../components/Mealcard";
 import { MealContext } from "../context/MealContext";
-import SupplementCard from "../components/SupplementCard";
 import GoalSetting from "../components/GoalSetting";
+import SupplementList from "../components/SupplementList";
 
 export default function Nutrition() {
-  const { meals, supplements, setSupplements } = useContext(MealContext)!;
+  const { meals } = useContext(MealContext)!;
   let totalCalories = 0;
   let totalProtein = 0;
   let totalCarbs = 0;
   let totalFats = 0;
 
   const [activeMealName, setActiveMealName] = useState<string | null>(null);
-  const [activeSupplement, setActiveSupplement] = useState<boolean>(false);
   const [isGoalSettingsOpen, setIsGoalSettingsOpen] = useState(false);
   meals.forEach((meal) => {
     meal.foods.forEach((food) => {
@@ -23,16 +22,6 @@ export default function Nutrition() {
       totalFats += food.macros.fats;
     });
   });
-  const toggleSupplement = (index: number) => {
-    const updatedSupplements = supplements.map((supplement, i) => {
-      if (i === index) {
-        return { ...supplement, isChecked: !supplement.isChecked };
-      }
-
-      return supplement;
-    });
-    setSupplements(updatedSupplements);
-  };
 
   return (
     <section className="space-y-4">
@@ -49,90 +38,60 @@ export default function Nutrition() {
       </div>
 
       <Calorietab />
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-        {meals.map((meal, index) => (
-          <div key={index} className="card-surface w-full flex flex-col h-full">
-            <h2 className="text-2xl font-semibold text-white mb-2">
-              {meal.name}
-            </h2>
-            {meal.foods.length > 0 ? (
-              <>
-                <ul className="space-y-2 pb-4 ">
-                  {meal.foods.map((food, foodIndex) => (
-                    <li key={foodIndex} className="text-white">
-                      {food.name} - {food.weight}g, {food.calories} kcal Carbs:{" "}
-                      {food.macros.carbs}g, Protein: {food.macros.protein}g,
-                      Fats: {food.macros.fats}g
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  className="btn-primary mt-4 w-full text-sm mt-auto"
-                  onClick={() => setActiveMealName(meal.name)}
-                >
-                  {" "}
-                  + Add Food to {meal.name}{" "}
-                </button>
-              </>
-            ) : (
-              <>
-                <p className="text-white p-4">No foods added yet.</p>
-                <button
-                  className="btn-primary mt-4 w-full text-sm mt-auto"
-                  onClick={() => setActiveMealName(meal.name)}
-                >
-                  {" "}
-                  + Add Food to {meal.name}{" "}
-                </button>
-              </>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="card-surface w-full">
-        <h2 className="text-2xl font-semibold text-white mb-2">Supplements</h2>
-        {supplements.length > 0 ? (
-          <div>
-            <ul className="space-y-2">
-              {supplements.map((supplement, index) => (
-                <li key={index} className="text-white">
-                  {supplement.name} - {supplement.dosage}{" "}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 grid-rows-2">
+        <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {meals.map((meal, index) => (
+            <div
+              key={index}
+              className="card-surface w-full flex flex-col h-full"
+            >
+              <h2 className="text-2xl font-semibold text-white mb-2">
+                {meal.name}
+              </h2>
+              {meal.foods.length > 0 ? (
+                <>
+                  <ul className="space-y-2 pb-4 ">
+                    {meal.foods.map((food, foodIndex) => (
+                      <li key={foodIndex} className="text-white">
+                        {food.name} - {food.weight}g, {food.calories} kcal
+                        Carbs: {food.macros.carbs}g, Protein:{" "}
+                        {food.macros.protein}g, Fats: {food.macros.fats}g
+                      </li>
+                    ))}
+                  </ul>
                   <button
-                    className="ml-2 px-2 py-1 text-xs rounded bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors"
-                    onClick={() => toggleSupplement(index)}
+                    className="btn-primary mt-4 w-full text-sm mt-auto"
+                    onClick={() => setActiveMealName(meal.name)}
                   >
-                    {supplement.isChecked ? "Taken" : "Take"}
+                    {" "}
+                    + Add Food to {meal.name}{" "}
                   </button>
-                </li>
-              ))}
-            </ul>
-            <button
-              className="btn-primary mt-4 w-full text-sm"
-              onClick={() => setActiveSupplement(true)}
-            >
-              + Add Supplement
-            </button>
-          </div>
-        ) : (
-          <div>
-            <p className="text-white">No supplements added yet.</p>
-            <button
-              className="btn-primary mt-4 w-full text-sm"
-              onClick={() => setActiveSupplement(true)}
-            >
-              + Add Supplement
-            </button>
-          </div>
-        )}
+                </>
+              ) : (
+                <>
+                  <p className="text-white p-4">No foods added yet.</p>
+                  <button
+                    className="btn-primary mt-4 w-full text-sm mt-auto"
+                    onClick={() => setActiveMealName(meal.name)}
+                  >
+                    {" "}
+                    + Add Food to {meal.name}{" "}
+                  </button>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="w-full h-full lg:col-span-1 row-span-2">
+          <SupplementList />
+        </div>
       </div>
+
       {activeMealName && (
         <Mealcard
           activeMealName={activeMealName}
           setActiveMealName={setActiveMealName}
         />
-      )}
-      {activeSupplement && (
-        <SupplementCard setActiveSupplement={setActiveSupplement} />
       )}
       {isGoalSettingsOpen && <GoalSetting setIsOpen={setIsGoalSettingsOpen} />}
     </section>

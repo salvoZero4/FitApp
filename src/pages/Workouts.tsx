@@ -102,21 +102,26 @@ export default function Workouts() {
                   return null;
                 })}
               </div>
-              {workouts.map((workout) => {
-                if (workout.day === day) {
-                  return workout.exercises.map((exercise, index) => (
-                    <ul key={index} className="mt-3 space-y-2">
-                      <li className="rounded-md border border-[var(--border)] bg-[var(--surface)]/65 px-3 py-2 text-sm">
-                        <p className="font-medium">
-                          {exercise.name} {exercise.sets} sets {exercise.reps}{" "}
-                          reps {exercise.weight} kg
+              <ul className="mt-3 space-y-2">
+                {workouts.map((workout) => {
+                  if (workout.day === day) {
+                    return workout.exercises.map((exercise, index) => (
+                      <li
+                        key={index}
+                        className="rounded-md border border-[var(--border)] bg-[var(--surface)]/65 px-3 py-2 text-sm"
+                      >
+                        <p className="font-medium text-xl">{exercise.name}</p>
+                        <p>
+                          {exercise.sets} sets {exercise.reps} reps{" "}
+                          {exercise.weight} kg
                         </p>
                       </li>
-                    </ul>
-                  ));
-                }
-                return null;
-              })}
+                    ));
+                  }
+
+                  return null;
+                })}
+              </ul>
 
               <button
                 className="btn-primary mt-4 w-full text-sm"
