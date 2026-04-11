@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useState } from "react";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/layout/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Workouts from "./pages/Workouts";
 import Nutrition from "./pages/Nutrition";
 import Progress from "./pages/Progress";
-import Header from "./components/Header";
+import Header from "./components/layout/Header";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import MealProvider from "./context/MealContext";

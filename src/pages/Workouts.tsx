@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { WorkoutContext } from "../context/WorkoutContext";
-import WorkoutSetting from "../components/Workoutsetting";
-import SessionEdit from "../components/SessionEdit";
+import WorkoutSetting from "../components/workout/Workoutsetting";
+import SessionEdit from "../components/workout/SessionEdit";
 
 export default function Workouts() {
   const { workouts, setWorkouts } = useContext(WorkoutContext);

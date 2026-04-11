@@ -1,8 +1,8 @@
-import Calorietab from "../components/Calorietab";
-import SupplementList from "../components/SupplementList";
+import Calorietab from "../components/nutrition/Calorietab";
+import SupplementList from "../components/nutrition/SupplementList";
 
-import Weighttab from "../components/Weighttab";
-import Workouttab from "../components/Workouttab";
+import Weighttab from "../components/progress/Weighttab";
+import Workouttab from "../components/workout/Workouttab";
 
 export default function Dashboard() {
   const oggi = new Date();

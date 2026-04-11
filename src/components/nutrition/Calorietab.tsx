@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { MealContext } from "../context/MealContext";
+import { MealContext } from "../../context/MealContext";
 export default function Calorietab() {
   const { meals, calorieGoal, proteinGoal, carbsGoal, fatsGoal } =
     useContext(MealContext)!;

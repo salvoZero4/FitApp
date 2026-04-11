@@ -1,49 +1,46 @@
-import { useContext, useState } from "react";
-import { WorkoutContext } from "../context/WorkoutContext";
+import { useState, useContext, type FormEvent } from "react";
+import { MealContext } from "../../context/MealContext";
 
-type WorkoutSettingProps = {
-  selectedDay: string | null;
-  setSelectedDay: (day: string | null) => void;
+type GoalSettingsProps = {
+  setIsOpen: (isOpen: boolean) => void;
 };
 
-export default function WorkoutSetting({
-  selectedDay,
-  setSelectedDay,
-}: WorkoutSettingProps) {
-  const { workouts, setWorkouts } = useContext(WorkoutContext);
+export default function GoalSettings({ setIsOpen }: GoalSettingsProps) {
+  const { setCalorieGoal, setProteinGoal, setCarbsGoal, setFatsGoal } =
+    useContext(MealContext)!;
 
-  const [exerciseName, setExerciseName] = useState("");
-  const [sets, setSets] = useState(0);
-  const [reps, setReps] = useState(0);
-  const [weight, setWeight] = useState(0);
+  const [tempCalories, setTempCalories] = useState("");
+  const [tempProtein, setTempProtein] = useState("");
+  const [tempCarbs, setTempCarbs] = useState("");
+  const [tempFats, setTempFats] = useState("");
   const [error, setError] = useState("");
 
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (exerciseName.trim() === "") {
-      setError("Please enter an exercise name.");
+    if (tempCalories.trim() === "" || isNaN(Number(tempCalories))) {
+      setError("Please enter a valid calorie goal.");
       return;
     }
     setError("");
+    if (
+      tempCarbs.trim() === "" ||
+      tempFats.trim() === "" ||
+      tempProtein.trim() === "" ||
+      isNaN(Number(tempCarbs)) ||
+      isNaN(Number(tempFats)) ||
+      isNaN(Number(tempProtein))
+    ) {
+      setError("Please enter valid macro goals.");
+      return;
+    }
 
-    const newExercise = {
-      name: exerciseName,
-      sets: sets,
-      reps: reps,
-      weight: weight,
-    };
-    const updatedWorkouts = workouts.map((workout) => {
-      if (workout.day === selectedDay) {
-        return { ...workout, exercises: [...workout.exercises, newExercise] };
-      }
-      return workout;
-    });
-    setWorkouts(updatedWorkouts);
-    setSelectedDay(null);
-    setExerciseName("");
-    setSets(0);
-    setReps(0);
-    setWeight(0);
+    setCalorieGoal(Number(tempCalories));
+    setProteinGoal(Number(tempProtein));
+    setCarbsGoal(Number(tempCarbs));
+    setFatsGoal(Number(tempFats));
+    setError("");
+
+    setIsOpen(false);
   };
 
   return (
@@ -54,12 +51,12 @@ export default function WorkoutSetting({
         <form className="space-y-4" onSubmit={handleSave}>
           <div>
             <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-              Add Exercise
+              Daily Calories
             </label>
             <input
-              type="text"
-              value={exerciseName}
-              onChange={(e) => setExerciseName(e.target.value)}
+              type="number"
+              value={tempCalories}
+              onChange={(e) => setTempCalories(e.target.value)}
               className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
             />
           </div>
@@ -67,34 +64,34 @@ export default function WorkoutSetting({
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                sets
+                Protein
               </label>
               <input
                 type="number"
-                value={sets}
-                onChange={(e) => setSets(Number(e.target.value))}
+                value={tempProtein}
+                onChange={(e) => setTempProtein(e.target.value)}
                 className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
             <div>
               <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                Reps
+                Carbs
               </label>
               <input
                 type="number"
-                value={reps}
-                onChange={(e) => setReps(Number(e.target.value))}
+                value={tempCarbs}
+                onChange={(e) => setTempCarbs(e.target.value)}
                 className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
             <div>
               <label className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                Weight
+                Fats
               </label>
               <input
                 type="number"
-                value={weight}
-                onChange={(e) => setWeight(Number(e.target.value))}
+                value={tempFats}
+                onChange={(e) => setTempFats(e.target.value)}
                 className="mt-1 w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 text-white focus:border-[var(--accent)] focus:outline-none"
               />
             </div>
@@ -105,12 +102,12 @@ export default function WorkoutSetting({
             <button
               type="button"
               className="btn-secondary w-full"
-              onClick={() => setSelectedDay(null)}
+              onClick={() => setIsOpen(false)}
             >
               Cancel
             </button>
             <button type="submit" className="btn-primary w-full">
-              Save Exercise
+              Save Goals
             </button>
           </div>
         </form>

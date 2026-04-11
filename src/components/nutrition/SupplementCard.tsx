@@ -1,5 +1,5 @@
 import { useContext, useState, type FormEvent } from "react";
-import { MealContext, type Supplement } from "../context/MealContext";
+import { MealContext, type Supplement } from "../../context/MealContext";
 type supplementProps = {
   setActiveSupplement: (active: boolean) => void;
 };

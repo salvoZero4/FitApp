@@ -1,9 +1,9 @@
-import Calorietab from "../components/Calorietab";
+import Calorietab from "../components/nutrition/Calorietab";
 import { useState, useContext } from "react";
-import Mealcard from "../components/Mealcard";
+import Mealcard from "../components/nutrition/Mealcard";
 import { MealContext } from "../context/MealContext";
-import GoalSetting from "../components/GoalSetting";
-import SupplementList from "../components/SupplementList";
+import GoalSetting from "../components/nutrition/GoalSetting";
+import SupplementList from "../components/nutrition/SupplementList";
 
 export default function Nutrition() {
   const { meals } = useContext(MealContext)!;

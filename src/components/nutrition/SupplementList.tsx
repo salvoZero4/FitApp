@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { MealContext } from "../context/MealContext";
+import { MealContext } from "../../context/MealContext";
 import SupplementCard from "./SupplementCard";
 
 export default function SupplementList() {

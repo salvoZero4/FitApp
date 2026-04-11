@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { WorkoutContext } from "../context/WorkoutContext";
+import { WorkoutContext } from "../../context/WorkoutContext";
 
 export default function Workouttab() {
   const { workouts } = useContext(WorkoutContext);

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { WorkoutContext } from "../context/WorkoutContext";
+import { WorkoutContext } from "../../context/WorkoutContext";
 
 export default function SessionEdit({
   sessionName,

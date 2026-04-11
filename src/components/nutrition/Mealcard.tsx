@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
-import { MealContext } from "../context/MealContext";
-import type { Food, Meal } from "../context/MealContext";
+import { MealContext } from "../../context/MealContext";
+import type { Food, Meal } from "../../context/MealContext";
 import { useContext } from "react";
 
 export default function Mealcard({
