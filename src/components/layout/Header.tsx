@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 type HeaderProps = {
   onMenuToggle: () => void;
@@ -6,6 +9,8 @@ type HeaderProps = {
 
 export default function Header({ onMenuToggle }: HeaderProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { signOut } = useContext(AuthContext)!;
 
   const pageMap: Record<string, string> = {
     "/dashboard": "Dashboard",
@@ -50,6 +55,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
       <button
         className="btn-primary focus-ring shadow-[0_6px_20px_rgba(0,214,255,0.28)]"
         type="button"
+        onClick={() => signOut().then(() => navigate("/login"))}
       >
         Logout
       </button>
