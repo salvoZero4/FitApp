@@ -3,7 +3,7 @@ export default function Weighttab() {
   const deviationWeight: number = 0.5; // Placeholder for actual deviation data
 
   return (
-    <div className="card-surface w-full lg:max-w-xs">
+    <div className="card-surface w-full">
       <p className="text-sm uppercase tracking-[0.16em] text-[var(--text-secondary)]">
         Current weight
       </p>

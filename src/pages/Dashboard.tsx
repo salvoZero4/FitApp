@@ -19,7 +19,9 @@ export default function Dashboard() {
 
       <div className="flex flex-col gap-4 lg:flex-row items-stretch">
         <Calorietab />
-        <Weighttab />
+        <div className="flex w-full lg:max-w-xs">
+          <Weighttab />
+        </div>
       </div>
       <div className="flex flex-col gap-4 lg:flex-row items-stretch">
         <Workouttab />
