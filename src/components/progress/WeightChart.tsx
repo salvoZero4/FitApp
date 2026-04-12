@@ -27,20 +27,17 @@ export default function HistoryWeight() {
       <h2 className="section-title mb-4">Weight Trend</h2>
 
       <div className="flex-1 w-full h-full min-h-[250px]">
-        {/* ResponsiveContainer fa sì che il grafico si rimpicciolisca da mobile e si allarghi da desktop */}
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={chartData}
             margin={{ top: 5, right: 10, bottom: 5, left: -20 }}
           >
-            {/* Griglia di sfondo tratteggiata (solo orizzontale per un look più pulito) */}
             <CartesianGrid
               strokeDasharray="3 3"
               stroke="var(--border)"
               vertical={false}
             />
 
-            {/* Asse X (Il Giorno) */}
             <XAxis
               dataKey="date"
               stroke="var(--text-secondary)"
@@ -50,10 +47,7 @@ export default function HistoryWeight() {
               dy={10} // Sposta le scritte un po' più in basso
             />
 
-            {/* Asse Y (Il Peso) */}
             <YAxis
-              // domain={["dataMin - 2", "dataMax + 2"]} fa in modo che il grafico non parta da 0,
-              // ma si "zoomi" sul range di peso attuale (es. tra 76kg e 82kg)
               domain={["dataMin - 2", "dataMax + 2"]}
               stroke="var(--text-secondary)"
               fontSize={12}
@@ -62,7 +56,6 @@ export default function HistoryWeight() {
               tickFormatter={(value) => `${value}kg`}
             />
 
-            {/* Il quadratino che appare quando passi col mouse sul grafico */}
             <Tooltip
               contentStyle={{
                 backgroundColor: "var(--surface-muted)",
@@ -73,7 +66,6 @@ export default function HistoryWeight() {
               itemStyle={{ color: "var(--accent)", fontWeight: "bold" }}
             />
 
-            {/* La Linea del grafico */}
             <Line
               type="monotone" // Rende le curve morbide
               dataKey="weight"
