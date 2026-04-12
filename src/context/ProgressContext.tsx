@@ -1,13 +1,13 @@
 import { createContext, useState, type ReactNode } from "react";
 
-type weight = {
+export type Weight = {
   date: Date;
   weight: number;
 };
 
 type ProgressContextType = {
-  weightHistory: weight[];
-  addWeightEntry: (entry: weight) => void;
+  weightHistory: Weight[];
+  addWeightEntry: (entry: Weight) => void;
 };
 
 export const ProgressContext = createContext<ProgressContextType>({
@@ -20,18 +20,9 @@ export default function ProgressProvider({
 }: {
   children: ReactNode;
 }) {
-  const [weightHistory, setWeightHistory] = useState<weight[]>([
-    {
-      date: new Date("2024-01-01"),
-      weight: 80,
-    },
-    {
-      date: new Date("2024-02-01"),
-      weight: 78,
-    },
-  ]);
+  const [weightHistory, setWeightHistory] = useState<Weight[]>([]);
 
-  const addWeightEntry = (entry: weight) => {
+  const addWeightEntry = (entry: Weight) => {
     setWeightHistory((prev) => [...prev, entry]);
   };
 
