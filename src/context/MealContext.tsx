@@ -74,8 +74,9 @@ export default function MealProvider({ children }: { children: ReactNode }) {
         .select("*")
         .eq("user_id", user.id)
         .single(); // Prendiamo l'unica riga dell'utente
-
-      if (data) {
+      if (error) {
+        console.error("Errore caricamento dati nutrizione:", error);
+      } else if (data) {
         if (data.meals) setMeals(data.meals);
         if (data.supplements) setSupplements(data.supplements);
         if (data.calorie_goal) setCalorieGoal(data.calorie_goal);
