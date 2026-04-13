@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { ProgressContext } from "../../context/ProgressContext";
+
 export default function AddWeight() {
   const { addWeightEntry } = useContext(ProgressContext);
   const [weight, setWeight] = useState("");

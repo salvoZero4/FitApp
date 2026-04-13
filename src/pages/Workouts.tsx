@@ -4,7 +4,7 @@ import WorkoutSetting from "../components/workout/Workoutsetting";
 import SessionEdit from "../components/workout/SessionEdit";
 
 export default function Workouts() {
-  const { workouts, setWorkouts } = useContext(WorkoutContext);
+  const { workouts, saveWorkoutsToDB } = useContext(WorkoutContext);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [editSessionName, setEditSessionName] = useState("");
 
@@ -28,7 +28,7 @@ export default function Workouts() {
       }
       return workout;
     });
-    setWorkouts(updatedWorkouts);
+    saveWorkoutsToDB(updatedWorkouts);
   };
 
   return (

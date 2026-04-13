@@ -10,7 +10,7 @@ export default function WorkoutSetting({
   selectedDay,
   setSelectedDay,
 }: WorkoutSettingProps) {
-  const { workouts, setWorkouts } = useContext(WorkoutContext);
+  const { workouts, saveWorkoutsToDB } = useContext(WorkoutContext);
 
   const [exerciseName, setExerciseName] = useState("");
   const [sets, setSets] = useState(0);
@@ -38,7 +38,7 @@ export default function WorkoutSetting({
       }
       return workout;
     });
-    setWorkouts(updatedWorkouts);
+    saveWorkoutsToDB(updatedWorkouts);
     setSelectedDay(null);
     setExerciseName("");
     setSets(0);

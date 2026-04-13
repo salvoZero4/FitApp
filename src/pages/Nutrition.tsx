@@ -6,7 +6,7 @@ import GoalSetting from "../components/nutrition/GoalSetting";
 import SupplementList from "../components/nutrition/SupplementList";
 
 export default function Nutrition() {
-  const { meals } = useContext(MealContext)!;
+  const { meals, resetDay } = useContext(MealContext)!;
   let totalCalories = 0;
   let totalProtein = 0;
   let totalCarbs = 0;
@@ -29,12 +29,21 @@ export default function Nutrition() {
         <h1 className="text-[var(--text-primary)] text-4xl font-bold tracking-tight md:text-5xl ">
           Daily nutrition overview
         </h1>
-        <button
-          className="btn-primary  text-sm p-4"
-          onClick={() => setIsGoalSettingsOpen(true)}
-        >
-          Edit Goals
-        </button>
+
+        <div>
+          <button
+            className="btn-secondary text-sm p-4 mr-2"
+            onClick={() => resetDay()}
+          >
+            Reset Day
+          </button>
+          <button
+            className="btn-primary  text-sm p-4"
+            onClick={() => setIsGoalSettingsOpen(true)}
+          >
+            Edit Goals
+          </button>
+        </div>
       </div>
 
       <Calorietab />

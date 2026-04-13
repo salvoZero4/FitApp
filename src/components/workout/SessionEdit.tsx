@@ -8,7 +8,7 @@ export default function SessionEdit({
   sessionName: string;
   setSessionName: (name: string) => void;
 }) {
-  const { workouts, setWorkouts } = useContext(WorkoutContext);
+  const { workouts, saveWorkoutsToDB } = useContext(WorkoutContext);
   const [tempName, setTempName] = useState(
     workouts.find((w) => w.day === sessionName)?.session || "",
   );
@@ -22,7 +22,7 @@ export default function SessionEdit({
       }
       return workout;
     });
-    setWorkouts(updatedWorkouts);
+    saveWorkoutsToDB(updatedWorkouts);
     setSessionName("");
   };
 
