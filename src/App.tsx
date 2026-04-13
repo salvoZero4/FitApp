@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import Sidebar from "./components/layout/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Workouts from "./pages/Workouts";
@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import MealProvider from "./context/MealContext";
 import WorkoutProvider from "./context/WorkoutContext";
 import ProgressProvider from "./context/ProgressContext";
-import AuthProvider, { AuthContext } from "./context/AuthContext";
+import AuthProvider from "./context/AuthContext";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 
 // Creiamo un piccolo componente per il Layout dell'app quando sei loggato
