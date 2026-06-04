@@ -2,8 +2,6 @@
 
 > A modern, full-stack SaaS application to track your workouts, daily nutrition, and physical progress.
 
-**🚀 Live Demo:** [https://fit-sandy.vercel.app/](https://fit-sandy.vercel.app/)
-
 ## 📖 About The Project
 
 F.I.T. is a comprehensive fitness dashboard designed to give users complete control over their health journey. Built with performance and user experience in mind, it features a sleek dark-mode interface, secure authentication, and real-time database syncing.
